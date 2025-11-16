@@ -35,4 +35,27 @@ document.getElementById('formAgendamento').addEventListener('submit', function(e
     listarAgendamentos();
 });
 
-function
+function listarAgendamentos(){
+    const lista = document.getElementById('listaAgendamentos');
+    lista.innerHTML = "";
+
+    horariosIndisponiveis.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${item.nome} - ${item.data} às ${item.horario}`;
+
+        const btn = document.createElement('button');
+        btn.textContent = "Cancelar";
+        btn.onclick = () => removerAgendamento(index); 
+
+        li.appendChild(btn);
+        lista.appendChild(li);
+    });
+
+  function removerAgendamento(i) {
+    horariosIndisponiveis.splice(i, 1);
+    localStorage.setItem("agendamentos", JSON.stringify(horariosIndisponiveis));
+    listarAgendamentos();
+  }  
+
+  listarAgendamentos();
+}
